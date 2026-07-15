@@ -1,8 +1,16 @@
+import cors from 'cors';
 import express from 'express';
 import diaryRouter from './routes/diaries.ts';
 
 const app = express();
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // restrict calls to those from this address
+    // methods: "GET" // only allow GET requests
+  })
+);
 
 const PORT = 3000;
 
