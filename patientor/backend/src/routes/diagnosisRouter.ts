@@ -4,9 +4,9 @@ import type { Diagnosis } from '../types.ts';
 
 const router = express.Router();
 
-router.get('/', (_req, res: Response<Diagnosis[]>) => {
+router.get('/', (_request, response: Response<Diagnosis[]>) => {
     const data = diagnosisService.getEntries();
-    res.send(data);
+    response.send(data);
 });
 
 export default router;

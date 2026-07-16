@@ -5,10 +5,10 @@ import { z } from 'zod';
 
 
 // middleware that parses newPatientEntry from request body
-const newPatientParser = (req: Request, _res: Response, next: NextFunction) => {
+const newPatientParser = (request: Request, _response: Response, next: NextFunction) => {
     try {
         // calls schema parser on request body
-        NewPatientEntrySchema.parse(req.body);
+        NewPatientEntrySchema.parse(request.body);
         next();
     }
     // if error caught, passed to error handling middleware
@@ -20,22 +20,34 @@ const newPatientParser = (req: Request, _res: Response, next: NextFunction) => {
 
 const router = express.Router();
 
-router.get('/', (_req, res: Response<NonSensitivePatient[]>) => {
+router.get('/', (_request, response: Response<NonSensitivePatient[]>) => {
     const data = patientService.getNonSensitiveEntries();
-    res.send(data);
+    response.send(data);
+});
+
+router.get('/:id', (request: Request, response: Response<Patient>) => {
+    const data = patientService.getEntries();
+    const user = data.find(patient => patient.id.toString() === request.params.id);
+    if (!user) {
+        response.status(404).end();
+    }
+    else {
+        response.send(user);
+    }
 });
 
 
-router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatientEntry>, res: Response<Patient>) => {
-    const addedEntry = patientService.addPatient(req.body);
-    res.json(addedEntry);
+
+router.post('/', newPatientParser, (request: Request<unknown, unknown, NewPatientEntry>, response: Response<Patient>) => {
+    const addedEntry = patientService.addPatient(request.body);
+    response.json(addedEntry);
 });
 
 
 // middleware to handle errors
-const errorMiddleware = (error: unknown, _req: Request, res: Response, next: NextFunction) => {
+const errorMiddleware = (error: unknown, _request: Request, response: Response, next: NextFunction) => {
     if (error instanceof z.ZodError) {
-        res.status(400).send({ error: error.issues });
+        response.status(400).send({ error: error.issues });
     } else {
         next(error);
     }
