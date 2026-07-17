@@ -31,7 +31,17 @@ const PatientDetails = () => {
             <Typography>Gender: {patient.gender}</Typography>
             <Typography>SSN: {patient.ssn}</Typography>
             <Typography>Occupation: {patient.occupation}</Typography>
-            <Typography>Date of Birth: {patient.dateOfBirth}</Typography>
+            <Typography gutterBottom>Date of Birth: {patient.dateOfBirth}</Typography>
+            <Typography variant="h6" gutterBottom> Entries: </Typography>
+            {patient.entries?.map(entry => (
+                <div key={entry.id}>
+                    <Typography>{entry.date} <i>{entry.description}</i> </Typography>
+                    <Typography>{entry.specialist}</Typography>
+                    <ul>{entry.diagnosisCodes?.map(code =>
+                        <li>{code}</li>
+                    )}</ul>
+                </div>
+            ))}
         </>
     );
 };
