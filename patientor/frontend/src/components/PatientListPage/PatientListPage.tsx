@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 import { PatientFormValues, Patient } from "../../types";
-import AddPatientModal from "../AddPatientModal";
+import AddPatientModal from "../AddPatientModal/AddPatientModal";
 
 import HealthRatingBar from "../HealthRatingBar";
 

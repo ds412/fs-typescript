@@ -8,7 +8,7 @@ import { Patient, Diagnosis } from "./types";
 
 import patientService from "./services/patients";
 import diagnosisService from "./services/diagnoses";
-import PatientListPage from "./components/PatientListPage";
+import PatientListPage from "./components/PatientListPage/PatientListPage";
 import PatientDetails from "./components/PatientDetails";
 
 const App = () => {
@@ -55,7 +55,7 @@ const App = () => {
                         } />
                         <Route
                             path="/patients/:id" element={
-                                <PatientDetails diagnosisMap={diagnosisMap}/>
+                                <PatientDetails diagnoses={diagnoses} diagnosisMap={diagnosisMap}/>
                             }
                         />
                     </Routes>

@@ -10,14 +10,16 @@ export enum Gender {
     Other = "other"
 }
 
-const HealthCheckRating = {
+export const HealthCheckRating = {
     Healthy: 0,
     LowRisk: 1,
     HighRisk: 2,
     CriticalRisk: 3,
 } as const;
 
-type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating];
+export type HealthCheckRating = typeof HealthCheckRating[keyof typeof HealthCheckRating];
+
+export type EntryType = | "HealthCheck" | "Hospital" | "OccupationalHealthcare";
 
 interface BaseEntry {
     id: string;
@@ -50,6 +52,8 @@ export interface OccupationalHealthcareEntry extends BaseEntry {
 }
 
 export type Entry = | HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry;
+
+export type EntryFormValues = | Omit<HealthCheckEntry, "id"> | Omit<HospitalEntry, "id"> | Omit<OccupationalHealthcareEntry, "id">;
 
 export interface Patient {
     id: string;

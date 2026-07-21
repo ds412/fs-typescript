@@ -2,7 +2,7 @@ name: Patientor E2E Tests
 
 on:
   push:
-    branches: [ xmain, xmaster ]
+    branches: [ main, master ]
 
 jobs:
   test:
@@ -39,7 +39,7 @@ jobs:
 
     - name: Install e2e test dependencies
       working-directory: ./patientor-tests
-      run: npm install 
+      run: npm install
 
     - name: Install Playwright browsers
       working-directory: ./patientor-tests
